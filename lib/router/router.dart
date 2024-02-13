@@ -1,60 +1,39 @@
 import 'dart:convert';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:esim_app/presentation/cart/cart.dart';
+import 'package:esim_app/presentation/home/home.dart';
 import 'package:esim_app/presentation/gifts/gift.dart';
-import 'package:esim_app/presentation/homepage/home.dart';
 import 'package:esim_app/presentation/profile/profile.dart';
 
-GoRouter createRouterFromJson(String jsonString) {
-  print("Received JSON string: $jsonString");
+class AppRoutes {
+  static Map<String, WidgetBuilder> parseRoutesFromJson(String jsonString) {
+    final Map<String, dynamic> routeData = jsonDecode(jsonString);
+    final List<dynamic> routes = routeData['routes'];
+    final Map<String, WidgetBuilder> parsedRoutes = {};
 
-  final Map<String, dynamic> routeData = jsonDecode(jsonString);
-  final List<GoRoute> routes = _parseRoutes(routeData['routes']);
+    for (final route in routes) {
+      final path = route['path'];
+      final componentName = route['component'];
 
-  print("My routes defined is $routes");
-  return GoRouter(routes: routes);
-}
+      switch (componentName) {
+        case 'HomePage':
+          parsedRoutes[path] = (context) => const HomePage();
+          break;
+        case 'CartPage':
+          parsedRoutes[path] = (context) => const CartPage();
+          break;
+        case 'GiftsPage':
+          parsedRoutes[path] = (context) => const GiftsPage();
+          break;
+        case 'ProfilePage':
+          parsedRoutes[path] = (context) => const ProfilePage();
+          break;
+        default:
+          // Handle unknown component names
+          break;
+      }
+    }
 
-List<GoRoute> _parseRoutes(List<dynamic> routes) {
-  print("Parsing routes: $routes");
-  if (routes.isEmpty) {
-    return [];
-  }
-  return routes.map((route) {
-    final List<GoRoute> children = _parseRoutes(route['children']);
-    return GoRoute(
-      name: route['component'],
-      path: route['path'],
-      builder: (context, state) {
-        print(
-            "Building route: ${route['path']} with component ${route['component']}");
-        return _getWidget(route['component']);
-      },
-      routes: children,
-    );
-  }).toList();
-}
-
-Widget _getWidget(String componentName) {
-  switch (componentName) {
-    case 'HomePage':
-      print('Home page');
-      return const HomePage();
-    case 'CartPage':
-      return const CartPage();
-    case 'GiftsPage':
-      print('Gifts page');
-
-      return const GiftsPage();
-    case 'ProfilePage':
-      print('Profile page');
-
-      return const ProfilePage();
-    default:
-      print('Unknown component: $componentName');
-
-      return Container(); // Or any default page/widget
+    return parsedRoutes;
   }
 }

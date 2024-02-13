@@ -12,11 +12,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GoRouter router = createRouterFromJson(jsonString);
+    final Map<String, WidgetBuilder> routeBuilders =
+        AppRoutes.parseRoutesFromJson(jsonString);
 
+    final List<GoRoute> routes = routeBuilders.entries.map((entry) {
+      print("object $routeBuilders");
+      return GoRoute(
+        path: entry.key,
+        builder: (context, _) => entry.value(context),
+      );
+    }).toList();
+
+    final router = GoRouter(
+      initialLocation: '/',
+      errorPageBuilder: (context, state) {
+        return MaterialPage(
+          key: state.pageKey,
+          child: Scaffold(
+            body: Center(
+              child: Text('Page not found'),
+            ),
+          ),
+        );
+      },
+      routes: routes,
+    );
     return MaterialApp.router(
       title: 'E-Sim App',
-      routerDelegate: router.routerDelegate,
+      routerConfig: router,
     );
   }
 }

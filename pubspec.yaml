@@ -38,6 +38,7 @@ dependencies:
   go_router: ^13.2.0
   awesome_bottom_bar: ^1.2.4
   flutter_boxicons: ^3.0.0
+  pie_chart: ^5.4.0
 
 dev_dependencies:
   flutter_test:

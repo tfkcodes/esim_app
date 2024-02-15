@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:pie_chart/pie_chart.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
+import 'package:esim_app/presentation/home/widget/plans_list.dart';
+import 'package:esim_app/presentation/home/widget/quick_stats_card.dart';
+import 'package:esim_app/presentation/home/widget/quick_balance_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -31,11 +35,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.only(left: 8.0),
-              child: Text(
-                '0672084262',
-                style: TextStyle(fontSize: 15, color: Colors.white),
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Row(
+                children: [
+                  const Text(
+                    '0672084262',
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Colors.white,
+                      ))
+                ],
               ),
             )
           ],
@@ -51,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundImage: NetworkImage(
                 "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww"),
           ),
-          SizedBox(
+          const SizedBox(
             width: 10,
           )
         ],
@@ -92,91 +106,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         )
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Container(
-                        height: 70,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                            color: const Color(0xffe9f6f5),
-                            borderRadius: BorderRadius.circular(15)),
-                        child: ListTile(
-                          leading: const CircleAvatar(
-                            backgroundColor: Color(0xffbce3e0),
-                            child: Center(
-                              child: Icon(
-                                Boxicons.bx_wallet_alt,
-                                color: Color(0xff26a69a),
-                              ),
-                            ),
-                          ),
-                          title: const Text('Balance'),
-                          subtitle: RichText(
-                              text: const TextSpan(
-                                  text: 'Tsh',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: Colors.black),
-                                  children: <TextSpan>[
-                                TextSpan(
-                                    text: '  450,000',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                        fontSize: 18))
-                              ])),
-                          trailing: SizedBox(
-                            child: Container(
-                              height: 40,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: const Color(0xff22958b),
-                              ),
-                              child: TextButton(
-                                child: const Text(
-                                  ' + Top Up Balance',
-                                  style: TextStyle(color: Color(0xffffffff)),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    const QuickBalanceCard(),
                   ],
                 ),
               ),
             ),
           ),
-          Positioned(
-              top: 160,
-              left: 16,
-              right: 16,
-              child: Container(
-                height: 170,
-                width: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.black,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.5,
-                      height: 180,
-                      color: Colors.white,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      height: 160,
-                      color: Colors.white,
-                    )
-                  ],
-                ),
-              ))
+          const QuickStatsCard(),
+          const PlanList(),
         ],
       ),
     );

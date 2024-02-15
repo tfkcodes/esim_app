@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       errorPageBuilder: (context, state) {
         return MaterialPage(
           key: state.pageKey,
-          child: Scaffold(
+          child: const Scaffold(
             body: Center(
               child: Text('Page not found'),
             ),

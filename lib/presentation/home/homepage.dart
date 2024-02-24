@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:pie_chart/pie_chart.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
 import 'package:esim_app/presentation/home/widget/plans_list.dart';
 import 'package:esim_app/presentation/home/widget/quick_stats_card.dart';
 import 'package:esim_app/presentation/home/widget/quick_balance_card.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   IconButton(
                       onPressed: () {},
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.arrow_drop_down,
                         color: Colors.white,
                       ))
@@ -70,51 +64,58 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            child: Container(
-              height: 220,
-              width: MediaQuery.of(context).size.width,
-              color: const Color(0xff22958b),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                child: Container(
+                  height: 220,
+                  width: MediaQuery.of(context).size.width,
+                  color: const Color(0xff22958b),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        RichText(
-                            text: const TextSpan(
-                                text: 'Hi',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w300, fontSize: 20),
-                                children: <TextSpan>[
-                              TextSpan(
-                                  text: '  Jerry, ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 20))
-                            ])),
-                        const Text(
-                          'this is your recent usage',
-                          style: TextStyle(color: Colors.white),
-                        )
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            RichText(
+                                text: const TextSpan(
+                                    text: 'Hi',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: 20),
+                                    children: <TextSpan>[
+                                  TextSpan(
+                                      text: '  Jerry, ',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                          fontSize: 20))
+                                ])),
+                            const Text(
+                              'this is your recent usage',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
+                        ),
+                        const QuickBalanceCard(),
                       ],
                     ),
-                    const QuickBalanceCard(),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              const QuickStatsCard(),
+              const PlanList(),
+            ],
           ),
-          const QuickStatsCard(),
-          const PlanList(),
-        ],
+        ),
       ),
     );
   }

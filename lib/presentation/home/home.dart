@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:esim_app/router/router.dart';
-import 'package:esim_app/router/routes.dart';
-import 'package:awesome_bottom_bar/tab_item.dart';
 import 'package:esim_app/presentation/cart/cart.dart';
 import 'package:esim_app/presentation/gifts/gift.dart';
 import 'package:flutter_boxicons/flutter_boxicons.dart';
@@ -17,7 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<TabItem> items = [
+  int visit = 0;
+
+  final List<TabItem> items = [
     const TabItem(
       icon: Boxicons.bx_home_alt,
     ),
@@ -32,36 +31,58 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
-  final Map<String, WidgetBuilder> routes =
-      AppRoutes.parseRoutesFromJson(jsonString);
-
   final List<Widget> _pages = [
     const HomeScreen(),
     const CartPage(),
     const GiftsPage(),
     const ProfilePage(),
   ];
-  int visit = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[visit],
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.only(bottom: 10, right: 10, left: 10),
-        child: BottomBarInspiredFancy(
-          borderRadius: BorderRadius.circular(15),
-          items: items,
-          backgroundColor: Colors.white,
-          color: Color(0xff26a69a),
-          colorSelected: Color(0xff22958b),
-          indexSelected: visit,
-          styleIconFooter: StyleIconFooter.dot,
-          animated: true,
-          onTap: (int index) => setState(() {
-            visit = index;
-          }),
-        ),
+      extendBody: true,
+      body: Stack(
+        children: [
+          IndexedStack(
+            index: visit,
+            children: _pages,
+          ),
+          Positioned(
+            left: 10,
+            right: 10,
+            bottom: 10,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, -3),
+                  ),
+                ],
+              ),
+              child: BottomBarInspiredFancy(
+                borderRadius: BorderRadius.circular(15),
+                items: items,
+                backgroundColor: Colors.white,
+                color: const Color(0xff26a69a),
+                colorSelected: const Color(0xff22958b),
+                indexSelected: visit,
+                styleIconFooter: StyleIconFooter.dot,
+                animated: true,
+                onTap: (int index) {
+                  setState(() {
+                    visit = index;
+                  });
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

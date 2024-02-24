@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:esim_app/router/router.dart';
-import 'package:esim_app/router/routes.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,17 +11,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, WidgetBuilder> routeBuilders =
-        AppRoutes.parseRoutesFromJson(jsonString);
-
-    final List<GoRoute> routes = routeBuilders.entries.map((entry) {
-      print("object $routeBuilders");
-      return GoRoute(
-        path: entry.key,
-        builder: (context, _) => entry.value(context),
-      );
-    }).toList();
-
     final router = GoRouter(
       initialLocation: '/',
       errorPageBuilder: (context, state) {
@@ -35,7 +23,7 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      routes: routes,
+      routes: [home, cart, gifts, profile, luku, water, service],
     );
     return MaterialApp.router(
       title: 'E-Sim App',

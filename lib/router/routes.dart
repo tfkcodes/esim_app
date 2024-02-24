@@ -20,6 +20,11 @@ const String jsonString = '''
         "path": "/profile",
         "component": "ProfilePage",
         "children": []
+      },
+        {
+        "path": "/water",
+        "component": "WaterServicePage",
+        "children": []
       }
     ]
   }

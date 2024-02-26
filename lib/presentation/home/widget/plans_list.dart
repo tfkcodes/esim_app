@@ -2,12 +2,8 @@ import 'data/plans_data.dart';
 import 'data/service_data.dart';
 import 'package:flutter/material.dart';
 import 'components/plan_component.dart';
-import 'package:go_router/go_router.dart';
 import 'package:esim_app/presentation/home/widget/screens/service.dart';
 import 'package:esim_app/presentation/home/widget/quick_service_cards.dart';
-import 'package:esim_app/presentation/home/widget/screens/luku/luku_service.dart';
-
-
 
 class PlanList extends StatelessWidget {
   const PlanList({
@@ -99,7 +95,11 @@ class PlanList extends StatelessWidget {
                               serviceType: card.name,
                               icon: card.iconData,
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) =>ServicePage(serviceType: card.name)));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => ServicePage(
+                                            serviceType: card.name)));
                               },
                             )),
                       )
